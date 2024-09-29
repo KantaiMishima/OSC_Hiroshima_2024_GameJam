@@ -15,7 +15,7 @@ func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	linear_velocity.x = input_direction.x * speed
 	linear_velocity.z = input_direction.y * speed
-	var input_space = Input.is_action_pressed("space")
+	var input_space = Input.is_action_just_pressed("space")
 	if (remainingJumpTimes > 0 && input_space):
 		linear_velocity.y = jumpPower
 		remainingJumpTimes -= 1
@@ -26,3 +26,6 @@ func initJumpTimes():
 func onEntered1(body_rid:RID, body:Node, body_shape_index:int, local_shape_index:int):
 	if (body.is_in_group("Floor")):
 		initJumpTimes()
+
+func jumpBack(point: Vector3):
+	self.position = point

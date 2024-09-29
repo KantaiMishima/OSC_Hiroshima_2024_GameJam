@@ -9,7 +9,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var input_space = Input.is_action_pressed("space")
+	var input_space = Input.is_action_just_pressed("space")
 	if (input_space && self.visible):
 		get_tree().reload_current_scene()
 		pass
