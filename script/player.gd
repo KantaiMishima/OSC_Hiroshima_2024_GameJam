@@ -13,6 +13,7 @@ func _physics_process(delta):
 
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
+	# self.apply_force()
 	linear_velocity.x = input_direction.x * speed
 	linear_velocity.z = input_direction.y * speed
 	var input_space = Input.is_action_just_pressed("space")

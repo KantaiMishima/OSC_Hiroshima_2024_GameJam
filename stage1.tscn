@@ -4,15 +4,14 @@
 [ext_resource type="Script" path="res://script/clear.gd" id="1_g68qo"]
 [ext_resource type="Script" path="res://script/dead_line.gd" id="2_fsdgy"]
 [ext_resource type="Script" path="res://script/game_over.gd" id="2_h7463"]
+[ext_resource type="PackedScene" uid="uid://cbvagtnbk51ox" path="res://component/floor.tscn" id="2_hsoas"]
 [ext_resource type="Script" path="res://script/goal.gd" id="5_nyv8e"]
 [ext_resource type="Script" path="res://script/player_history.gd" id="6_dtxcs"]
-[ext_resource type="PackedScene" uid="uid://fekhje8usd1m" path="res://check_point.tscn" id="6_rbfgr"]
+[ext_resource type="PackedScene" uid="uid://fekhje8usd1m" path="res://component/check_point.tscn" id="6_rbfgr"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_yyavj"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_eaa5i"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_gr5yv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oi52c"]
 
@@ -43,15 +42,7 @@ shape = SubResource("SphereShape3D_eaa5i")
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 3)
 
-[node name="Floor" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("PlaneMesh_gr5yv")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor" groups=["Floor"]]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
-transform = Transform3D(2, 0, 0, 0, 0.01, 0, 0, 0, 2, 0, 0, 0)
-shape = SubResource("BoxShape3D_oi52c")
+[node name="Floor" parent="." instance=ExtResource("2_hsoas")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.369747, 0.929133, 0, -0.929133, -0.369747, 0, 100, 0)
@@ -183,13 +174,24 @@ checkPoints = [NodePath("../Node3D"), NodePath("../CheckPoint"), NodePath("../Ch
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="CheckPoint2" parent="." instance=ExtResource("6_rbfgr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.39856, 1, -4.04038)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.229, 1, -4.04038)
 
 [node name="CheckPoint3" parent="." instance=ExtResource("6_rbfgr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.12524, 1, -3.1744)
 
 [node name="CheckPoint4" parent="." instance=ExtResource("6_rbfgr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0982, 1, 4.86357)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.4953, 1, 4.86357)
+
+[node name="Floor2" parent="." instance=ExtResource("2_hsoas")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 23.3153, 0, 0)
+
+[node name="UI" type="RichTextLabel" parent="."]
+offset_right = 329.0
+offset_bottom = 73.0
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/normal_font_size = 24
+text = "Space：Jump
+Shift：Back ( 2 times )"
 
 [connection signal="body_shape_entered" from="Player" to="Player" method="onEntered1"]
 [connection signal="body_entered" from="DeadLine" to="DeadLine" method="onEntered"]
