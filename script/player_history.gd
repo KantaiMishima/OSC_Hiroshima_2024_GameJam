@@ -9,6 +9,8 @@ var lastCheckedPointIndex = 0
 func _ready() -> void:
 	lastCheckedPointIndex = 0
 	jumpTimes = initialJumpTimes
+	for checkPoint in checkPoints:
+		checkPoint.hide()
 	checkPoints[1].show()
 	
 	pass # Replace with function body.
