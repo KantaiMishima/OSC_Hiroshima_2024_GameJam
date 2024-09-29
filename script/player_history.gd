@@ -9,6 +9,8 @@ var lastCheckedPointIndex = 0
 func _ready() -> void:
 	lastCheckedPointIndex = 0
 	jumpTimes = initialJumpTimes
+	checkPoints[1].show()
+	
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -20,3 +22,8 @@ func _process(delta: float) -> void:
 func jumpBack():
 	$"../Player".jumpBack(checkPoints[lastCheckedPointIndex].position)
 	jumpTimes -= 1
+
+func check():
+	lastCheckedPointIndex += 1
+	checkPoints[lastCheckedPointIndex].hide()
+	checkPoints[lastCheckedPointIndex + 1].show()

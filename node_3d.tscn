@@ -1,11 +1,12 @@
 [gd_scene load_steps=14 format=3 uid="uid://c73neq2g3qem8"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_cn8jc"]
-[ext_resource type="Script" path="res://clear.gd" id="1_g68qo"]
-[ext_resource type="Script" path="res://dead_line.gd" id="2_fsdgy"]
-[ext_resource type="Script" path="res://game_over.gd" id="2_h7463"]
-[ext_resource type="Script" path="res://goal.gd" id="5_nyv8e"]
-[ext_resource type="Script" path="res://player_history.gd" id="6_dtxcs"]
+[ext_resource type="Script" path="res://script/player.gd" id="1_cn8jc"]
+[ext_resource type="Script" path="res://script/clear.gd" id="1_g68qo"]
+[ext_resource type="Script" path="res://script/dead_line.gd" id="2_fsdgy"]
+[ext_resource type="Script" path="res://script/game_over.gd" id="2_h7463"]
+[ext_resource type="Script" path="res://script/goal.gd" id="5_nyv8e"]
+[ext_resource type="Script" path="res://script/player_history.gd" id="6_dtxcs"]
+[ext_resource type="PackedScene" uid="uid://fekhje8usd1m" path="res://check_point.tscn" id="6_rbfgr"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_yyavj"]
 
@@ -19,9 +20,6 @@
 albedo_color = Color(0.784314, 0.196078, 0.105882, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_wudl6"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4y375"]
-albedo_color = Color(0.8, 0.807843, 0.337255, 1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -175,20 +173,11 @@ theme_override_constants/outline_size = 16
 theme_override_font_sizes/normal_font_size = 160
 text = "Clear"
 
-[node name="CheckPoint" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.392, 1, 4.86357)
-script = ExtResource("5_nyv8e")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CheckPoint"]
-shape = SubResource("BoxShape3D_oi52c")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CheckPoint"]
-material_override = SubResource("StandardMaterial3D_4y375")
-mesh = SubResource("CylinderMesh_wudl6")
+[node name="CheckPoint" parent="." instance=ExtResource("6_rbfgr")]
 
 [node name="PlayerHistory" type="Node" parent="." node_paths=PackedStringArray("checkPoints")]
 script = ExtResource("6_dtxcs")
-checkPoints = [NodePath("../Node3D")]
+checkPoints = [NodePath("../Node3D"), NodePath("../CheckPoint"), NodePath("../Goal")]
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -196,4 +185,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [connection signal="body_shape_entered" from="Player" to="Player" method="onEntered1"]
 [connection signal="body_entered" from="DeadLine" to="DeadLine" method="onEntered"]
 [connection signal="body_entered" from="Goal" to="Goal" method="onEntered"]
-[connection signal="body_entered" from="CheckPoint" to="CheckPoint" method="onEntered"]
