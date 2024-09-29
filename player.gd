@@ -11,7 +11,7 @@ func get_input():
 	linear_velocity.x = input_direction.x * speed
 	linear_velocity.z = input_direction.y * speed
 	var input_space = Input.is_action_pressed("space")
-	if (linear_velocity.y == 0 && input_space):
+	if (position.y < 0.1 && input_space):
 		linear_velocity.y = jump
 		pass
 	pass

@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c73neq2g3qem8"]
+[gd_scene load_steps=8 format=3 uid="uid://c73neq2g3qem8"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_cn8jc"]
+[ext_resource type="Script" path="res://dead_line.gd" id="2_fsdgy"]
+[ext_resource type="Script" path="res://game_over.gd" id="2_h7463"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_gr5yv"]
 
@@ -12,13 +14,13 @@
 
 [node name="Node3D" type="Node3D"]
 
-[node name="floor" type="MeshInstance3D" parent="."]
+[node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 mesh = SubResource("PlaneMesh_gr5yv")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="floor/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
 transform = Transform3D(2, 0, 0, 0, 0.01, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("BoxShape3D_oi52c")
 
@@ -42,3 +44,62 @@ shape = SubResource("SphereShape3D_eaa5i")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 3)
+
+[node name="DeadLine" type="Area3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 0.1, 0, 0, 0, 100, 0, -1, 0)
+script = ExtResource("2_fsdgy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DeadLine"]
+shape = SubResource("BoxShape3D_oi52c")
+
+[node name="GameOver" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_h7463")
+
+[node name="NextAction" type="RichTextLabel" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = 55.0
+offset_right = 160.0
+offset_bottom = 165.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 9.39
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 40
+text = "Spaceで最初から"
+
+[node name="GameOverMainText" type="RichTextLabel" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -431.0
+offset_top = -236.0
+offset_right = 429.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 160
+text = "GameOver"
+
+[connection signal="body_entered" from="DeadLine" to="DeadLine" method="onEntered"]
